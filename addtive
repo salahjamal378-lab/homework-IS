@@ -1,0 +1,31 @@
+def encrypt(text, key):
+  result = ""
+
+  for ch in text:
+    if 'a' <= ch <= 'z':
+      x = ord(ch) - ord('a')
+      x = (x + key) % 26
+      result += chr(x + ord('a'))
+    else:
+      result += ch 
+
+  return result
+
+
+def decrypt(text, key):
+  result = ""
+
+  for ch in text:
+    if 'a' <= ch <= 'z':
+      x = ord(ch) - ord('a')
+      x = (x - key) % 26
+      result += chr(x + ord('a'))
+    else:
+      result += ch
+
+  return result
+
+
+def blind_attack(cipher_text):
+  for key in range(26):
+    print("key =", key, "->", decrypt(cipher_text, key))
