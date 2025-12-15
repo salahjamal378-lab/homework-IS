@@ -1,0 +1,29 @@
+def vigenere_encrypt(plaintext, key):
+    plaintext = plaintext.upper()
+    key = key.upper()
+    ciphertext = ''
+    key_idx = 0
+    for char in plaintext:
+        if char.isalpha():
+            p = ord(char) - 65
+            k = ord(key[key_idx % len(key)]) - 65
+            ciphertext += chr((p + k) % 26 + 65)
+            key_idx += 1
+        else:
+            ciphertext += char
+    return ciphertext
+
+def vigenere_decrypt(ciphertext, key):
+    ciphertext = ciphertext.upper()
+    key = key.upper()
+    plaintext = ''
+    key_idx = 0
+    for char in ciphertext:
+        if char.isalpha():
+            c = ord(char) - 65
+            k = ord(key[key_idx % len(key)]) - 65
+            plaintext += chr((c - k) % 26 + 65)
+            key_idx += 1
+        else:
+            plaintext += char
+    return plaintext
