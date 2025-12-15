@@ -1,0 +1,30 @@
+def playfair_prepare_text(plaintext):
+    plaintext = plaintext.upper().replace('J', 'I')
+    prepared = ''
+    i = 0
+    while i < len(plaintext):
+        if not plaintext[i].isalpha():
+            prepared += plaintext[i]
+            i += 1
+            continue
+        if i == len(plaintext) - 1:
+            prepared += plaintext[i] + 'X'
+            break
+        if plaintext[i] == plaintext[i + 1]:
+            prepared += plaintext[i] + 'X'
+            i += 1
+        else:
+            prepared += plaintext[i] + plaintext[i + 1]
+            i += 2
+    return prepared
+
+def playfair_create_matrix(key):
+    key = key.upper().replace('J', 'I')
+    matrix = []
+    chars = []
+    for char in key + 'ABCDEFGHIKLMNOPQRSTUVWXYZ':
+        if char not in chars and char.isalpha():
+            chars.append(char)
+    for i in range(0, 25, 5):
+        matrix.append(chars[i:i+5])
+    return matrix
