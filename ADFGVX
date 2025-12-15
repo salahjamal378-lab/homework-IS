@@ -1,0 +1,30 @@
+def adfgvx_create_matrix(key):
+    key = key.upper()
+    chars = []
+    for char in key + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789':
+        if char not in chars:
+            chars.append(char)
+    matrix = []
+    for i in range(0, 36, 6):
+        matrix.append(chars[i:i+6])
+    return matrix
+
+def adfgvx_encrypt(plaintext, key, transposition_key):
+    matrix = adfgvx_create_matrix(key)
+    plaintext = plaintext.upper()
+    coordinates = 'ADFGVX'
+    step1 = ''
+    for char in plaintext:
+        if char.isalnum():
+            for r in range(6):
+                for c in range(6):
+                    if matrix[r][c] == char:
+                        step1 += coordinates[r] + coordinates[c]
+    trans_dict = {char: [] for char in transposition_key}
+    for i, char in enumerate(step1):
+        trans_dict[transposition_key[i % len(transposition_key)]].append(char)
+    sorted_keys = sorted(transposition_key)
+    step2 = ''
+    for key_char in sorted_keys:
+        step2 += ''.join(trans_dict[key_char])
+    return step2
